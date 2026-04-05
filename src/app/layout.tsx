@@ -1,28 +1,34 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0a0a0a",
+};
+
 export const metadata: Metadata = {
-  title: "هدير الشرق للمقاولات العامة | سفلتة طرق وبنية تحتية في جدة",
+  title: "شركة أسفلت في جدة | مقاول سفلتة طرق معتمد - هدير الشرق",
   description:
-    "هدير الشرق للمقاولات العامة - شركة سفلتة طرق وبنية تحتية رائدة في جدة والمملكة العربية السعودية. متخصصون في سفلتة الطرق، أعمال البنية التحتية، تخطيط الطرق، وعلامات الطرق. اتصل بنا الآن.",
+    "أفضل مقاول أسفلت في جدة. متخصصون في سفلتة الطرق، البنية التحتية، وتخطيط المواقف بأحدث المعدات. خبرة 15 عاماً في مشاريع الطرق بجدة. اطلب عرض سعر الآن!",
   keywords:
-    "سفلتة طرق جدة, بنية تحتية جدة, مقاولات عامة السعودية, road construction Jeddah, asphalt paving Jeddah, infrastructure company Saudi Arabia, تخطيط طرق, علامات طرق, شركة مقاولات جدة",
-  authors: [{ name: "Hadeer Al Sharq General Contracting" }],
-  creator: "Hadeer Al Sharq",
+    "شركة أسفلت في جدة, مقاول أسفلت جدة, سفلتة طرق جدة, road construction Jeddah, asphalt contractor Jeddah, infrastructure company Saudi Arabia, تخطيط طرق, علامات طرق, شركة سفلتة بجدة",
+  authors: [{ name: "هدير الشرق للمقاولات العامة" }],
+  creator: "هدير الشرق",
   openGraph: {
-    title: "هدير الشرق للمقاولات العامة | Hadeer Al Sharq General Contracting",
+    title: "شركة أسفلت في جدة | مقاول سفلتة طرق معتمد - هدير الشرق",
     description:
-      "شركة رائدة في سفلتة الطرق والبنية التحتية في جدة والمملكة العربية السعودية. Leading road construction and infrastructure company in Jeddah, Saudi Arabia.",
+      "شركة رائدة في سفلتة الطرق والبنية التحتية في جدة والمملكة العربية السعودية. Leading asphalt contractor & road construction in Jeddah.",
     locale: "ar_SA",
     alternateLocale: "en_US",
     type: "website",
-    siteName: "Hadeer Al Sharq General Contracting",
+    siteName: "هدير الشرق للمقاولات العامة",
   },
   twitter: {
     card: "summary_large_image",
-    title: "هدير الشرق للمقاولات العامة",
+    title: "شركة أسفلت في جدة - هدير الشرق",
     description:
-      "شركة سفلتة طرق وبنية تحتية رائدة في جدة. Road construction & infrastructure in Jeddah.",
+      "مقاول أسفلت معتمد في جدة. Road construction & asphalt paving in Jeddah.",
   },
   robots: {
     index: true,
@@ -48,6 +54,73 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ConstructionBusiness",
+        "name": "Hadeer Al Sharq General Contracting | هدير الشرق للمقاولات العامة",
+        "image": "https://asphalt-jeddah.com/og-image.jpg",
+        "@id": "https://asphalt-jeddah.com",
+        "url": "https://asphalt-jeddah.com",
+        "telephone": "+966565633240",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "حي المروة",
+          "addressLocality": "جدة",
+          "addressRegion": "منطقة مكة المكرمة",
+          "postalCode": "23541",
+          "addressCountry": "SA"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 21.6167,
+          "longitude": 39.1667
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "00:00",
+          "closes": "23:59"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Jeddah"
+        },
+        "description": "Best asphalt contractor in Jeddah specializing in road construction, infrastructure works, and paving."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "كم سعر متر الأسفلت في جدة؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "يختلف السعر بناءً على مساحة المشروع ونوع الطبقة المطلوبة. نحن نقدم أفضل الأسعار التنافسية في جدة مع ضمان الجودة."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "هل تقومون بسفلتة مواقف السيارات الصغيرة؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نعم، نحن متخصصون في سفلتة كافة المساحات بدءاً من مواقف القصور والمنازل إلى المخططات والمصانع."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
@@ -57,9 +130,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
-        <meta name="theme-color" content="#0a0a0a" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className="antialiased">
         {children}

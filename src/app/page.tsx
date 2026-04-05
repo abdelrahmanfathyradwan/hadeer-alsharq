@@ -8,6 +8,7 @@ import Services from "@/components/Services";
 import Projects from "@/components/Projects";
 import Gallery from "@/components/Gallery";
 import About from "@/components/About";
+import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
@@ -36,6 +37,7 @@ function PageContent() {
         <Projects />
         <Gallery />
         <About />
+        <FAQ />
         <Contact />
       </main>
       <Footer />
