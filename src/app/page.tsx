@@ -29,7 +29,7 @@ function PageContent() {
   }, [dir, locale, t]);
 
   return (
-    <div dir={dir} className="min-h-screen bg-asphalt-950">
+    <div dir={dir} className="min-h-screen bg-asphalt-950 overflow-x-hidden relative">
       <Navbar />
       <main>
         <Hero />

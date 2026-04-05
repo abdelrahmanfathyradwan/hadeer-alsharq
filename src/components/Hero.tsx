@@ -49,14 +49,24 @@ export default function Hero() {
           </div>
 
           {/* Headline */}
+          <div
+            className={`transition-all duration-700 delay-75 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <h2 className="text-road-400 text-2xl md:text-3xl font-bold mb-3 md:mb-5">
+              {t.footer.companyName}
+            </h2>
+          </div>
+
           <h1
-            className={`text-4xl sm:text-3xl md:text-6xl lg:text-7xl font-black leading-[1.7] mb-6 md:mb-8 transition-all duration-700 delay-150 ${
+            className={`text-4xl sm:text-3xl md:text-6xl lg:text-7xl font-black leading-[1.6] mb-6 md:mb-8 transition-all duration-700 delay-150 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
             <span className="text-white">{t.hero.title} </span>
-            <span className="gradient-text">{t.hero.titleHighlight}</span>
-            <br/>
+            <span className="gradient-text">{t.hero.titleHighlight} </span>
+            <br className="hidden md:block"/>
             <span className="text-white">{t.hero.titleEnd}</span>
           </h1>
 
