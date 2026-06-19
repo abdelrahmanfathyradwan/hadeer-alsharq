@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useLanguage } from "@/context/LanguageContext";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { translations, type Locale } from "@/lib/translations";
 import SectionHeader from "@/components/SectionHeader";
 
 const allImages = Array.from({ length: 29 }, (_, i) => i + 1);
@@ -40,9 +39,9 @@ const imageAlts = [
   "Completed road construction project in Saudi Arabia",
 ];
 
-export default function Gallery() {
-  const { t, dir } = useLanguage();
-  const [ref, isVisible] = useIntersectionObserver<HTMLElement>({ threshold: 0.05 });
+export default function Gallery({ locale = "ar" }: { locale?: Locale }) {
+  const t = translations[locale];
+  const dir = t.dir;
   const [showAll, setShowAll] = useState(false);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
@@ -51,18 +50,13 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      ref={ref}
       dir={dir}
       className="relative py-20 md:py-28 bg-asphalt-950"
     >
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-        <div
-          className={`transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="transition-all duration-700 opacity-100 translate-y-0">
           <SectionHeader
             badge={t.gallery.badge}
             title={t.gallery.title}
@@ -72,11 +66,7 @@ export default function Gallery() {
         </div>
 
         {/* Featured Row - 3 large images */}
-        <div
-          className={`grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-3 md:mb-4 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-3 md:mb-4 transition-all duration-700 delay-200 opacity-100 translate-y-0">
           {[6, 3, 15].map((imgNum, i) => (
             <div
               key={imgNum}
@@ -112,13 +102,10 @@ export default function Gallery() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
           {visibleImages
             .filter((n) => ![6, 3, 15].includes(n))
-            .map((imgNum, i) => (
+            .map((imgNum) => (
               <div
                 key={imgNum}
-                className={`relative aspect-square rounded-xl overflow-hidden cursor-pointer group transition-all duration-500 ${
-                  isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                }`}
-                style={{ transitionDelay: isVisible ? `${300 + i * 40}ms` : "0ms" }}
+                className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group transition-all duration-500 opacity-100 scale-100"
                 onClick={() => setLightbox(imgNum)}
               >
                 <Image

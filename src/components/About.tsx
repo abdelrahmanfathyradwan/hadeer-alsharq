@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { useLanguage } from "@/context/LanguageContext";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { translations, type Locale } from "@/lib/translations";
 import SectionHeader from "@/components/SectionHeader";
 
 function ValueIcon({ index }: { index: number }) {
@@ -27,39 +24,31 @@ function ValueIcon({ index }: { index: number }) {
   return icons[index] || null;
 }
 
-export default function About() {
-  const { t, dir } = useLanguage();
-  const [ref, isVisible] = useIntersectionObserver<HTMLElement>({ threshold: 0.1 });
+export default function About({ locale = "ar", as = "h2" }: { locale?: Locale; as?: "h1" | "h2" }) {
+  const t = translations[locale];
+  const dir = t.dir;
 
   return (
     <section
       id="about"
-      ref={ref}
       dir={dir}
       className="relative py-20 md:py-28 bg-asphalt-900"
     >
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-        <div
-          className={`transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="transition-all duration-700 opacity-100 translate-y-0">
           <SectionHeader
             badge={t.about.badge}
             title={t.about.title}
             titleHighlight={t.about.titleHighlight}
+            as={as}
           />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Text Content */}
-          <div
-            className={`order-2 lg:order-1 transition-all duration-700 delay-200 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
-            }`}
-          >
+          <div className="order-2 lg:order-1 transition-all duration-700 delay-200 opacity-100 translate-x-0">
             <div className="space-y-4 md:space-y-5 mb-8 md:mb-10">
               {t.about.paragraphs.map((p, i) => (
                 <p key={i} className="text-sm md:text-base text-asphalt-300 leading-relaxed">
@@ -90,11 +79,7 @@ export default function About() {
           </div>
 
           {/* Image Collage */}
-          <div
-            className={`order-1 lg:order-2 transition-all duration-700 delay-300 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-            }`}
-          >
+          <div className="order-1 lg:order-2 transition-all duration-700 delay-300 opacity-100 translate-x-0">
             <div className="grid grid-cols-2 gap-3 md:gap-4">
               <div className="space-y-3 md:space-y-4">
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">

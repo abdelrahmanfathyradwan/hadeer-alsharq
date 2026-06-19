@@ -1,7 +1,4 @@
-"use client";
-
-import { useLanguage } from "@/context/LanguageContext";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { translations, type Locale } from "@/lib/translations";
 import SectionHeader from "@/components/SectionHeader";
 
 function ServiceIcon({ type }: { type: string }) {
@@ -36,31 +33,26 @@ function ServiceIcon({ type }: { type: string }) {
   }
 }
 
-export default function Services() {
-  const { t, dir } = useLanguage();
-  const [ref, isVisible] = useIntersectionObserver<HTMLElement>({ threshold: 0.1 });
+export default function Services({ locale = "ar", as = "h2" }: { locale?: Locale; as?: "h1" | "h2" }) {
+  const t = translations[locale];
+  const dir = t.dir;
 
   return (
     <section
       id="services"
-      ref={ref}
       dir={dir}
       className="relative py-20 md:py-28 bg-asphalt-950"
     >
-      {/* Top divider */}
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-        <div
-          className={`transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="transition-all duration-700 opacity-100 translate-y-0">
           <SectionHeader
             badge={t.services.badge}
             title={t.services.title}
             titleHighlight={t.services.titleHighlight}
             subtitle={t.services.subtitle}
+            as={as}
           />
         </div>
 
@@ -68,17 +60,12 @@ export default function Services() {
           {t.services.items.map((service, i) => (
             <div
               key={i}
-              className={`group glass-card rounded-2xl p-6 md:p-8 hover:border-road-500/30 hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-1 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: isVisible ? `${200 + i * 100}ms` : "0ms" }}
+              className="group glass-card rounded-2xl p-6 md:p-8 hover:border-road-500/30 hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-1 opacity-100 translate-y-0"
             >
-              {/* Icon */}
               <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-road-500/10 flex items-center justify-center mb-5 group-hover:bg-road-500/20 group-hover:scale-105 transition-all duration-300">
                 <ServiceIcon type={service.icon} />
               </div>
 
-              {/* Content */}
               <h3 className="text-lg md:text-xl font-bold text-white mb-3 group-hover:text-road-400 transition-colors">
                 {service.title}
               </h3>
@@ -86,7 +73,6 @@ export default function Services() {
                 {service.description}
               </p>
 
-              {/* Decorative line */}
               <div className="mt-6 h-0.5 w-12 bg-gradient-to-r from-road-500 to-transparent rounded-full group-hover:w-full transition-all duration-500" />
             </div>
           ))}

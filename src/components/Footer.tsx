@@ -1,23 +1,23 @@
-"use client";
+import Link from "next/link";
+import { translations, type Locale } from "@/lib/translations";
 
-import { useLanguage } from "@/context/LanguageContext";
-
-export default function Footer() {
-  const { t, dir, locale } = useLanguage();
+export default function Footer({ locale = "ar" }: { locale?: Locale }) {
+  const t = translations[locale];
+  const dir = t.dir;
 
   const currentYear = new Date().getFullYear();
 
   const navLinks = [
-    { href: "#home", label: t.nav.home },
-    { href: "#services", label: t.nav.services },
-    { href: "#projects", label: t.nav.projects },
-    { href: "#about", label: t.nav.about },
-    { href: "#contact", label: t.nav.contact },
+    { href: "/", label: t.nav.home },
+    { href: "/services", label: t.nav.services },
+    { href: "/projects", label: t.nav.projects },
+    { href: "/about", label: t.nav.about },
+    { href: "/contact", label: t.nav.contact },
   ];
 
   const serviceLinks = t.services.items.map((s) => ({
     label: s.title,
-    href: "#services",
+    href: "/services",
   }));
 
   return (
@@ -97,12 +97,12 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-sm text-asphalt-400 hover:text-road-400 transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -114,12 +114,12 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {serviceLinks.map((link, i) => (
                 <li key={i}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-sm text-asphalt-400 hover:text-road-400 transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

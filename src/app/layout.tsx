@@ -8,6 +8,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.hadeer-alsharq.com"),
   title: "شركة أسفلت في جدة | مقاول سفلتة طرق معتمد - هدير الشرق",
   description:
     "أفضل مقاول أسفلت في جدة. متخصصون في سفلتة الطرق، البنية التحتية، وتخطيط المواقف بأحدث المعدات. خبرة 15 عاماً في مشاريع الطرق بجدة. اطلب عرض سعر الآن!",
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
     alternateLocale: "en_US",
     type: "website",
     siteName: "هدير الشرق للمقاولات العامة",
+    url: "https://www.hadeer-alsharq.com",
   },
   twitter: {
     card: "summary_large_image",
@@ -42,9 +44,10 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
+    canonical: "https://www.hadeer-alsharq.com",
     languages: {
-      "ar-SA": "/",
-      "en-US": "/?lang=en",
+      "ar-SA": "https://www.hadeer-alsharq.com",
+      "en-US": "https://www.hadeer-alsharq.com/?lang=en",
     },
   },
 };
@@ -60,9 +63,9 @@ export default function RootLayout({
       {
         "@type": "ConstructionBusiness",
         "name": "Hadeer Al Sharq General Contracting | هدير الشرق للمقاولات العامة",
-        "image": "https://asphalt-jeddah.com/og-image.jpg",
-        "@id": "https://asphalt-jeddah.com",
-        "url": "https://asphalt-jeddah.com",
+        "image": "https://www.hadeer-alsharq.com/5.jpeg",
+        "@id": "https://www.hadeer-alsharq.com",
+        "url": "https://www.hadeer-alsharq.com",
         "telephone": "+966565633240",
         "address": {
           "@type": "PostalAddress",
@@ -91,11 +94,70 @@ export default function RootLayout({
           "opens": "00:00",
           "closes": "23:59"
         },
-        "areaServed": {
-          "@type": "City",
-          "name": "Jeddah"
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Jeddah"
+          },
+          {
+            "@type": "City",
+            "name": "Makkah"
+          },
+          {
+            "@type": "City",
+            "name": "Taif"
+          }
+        ],
+        "description": "أفضل مقاول أسفلت في جدة. متخصصون في سفلتة الطرق، البنية التحتية، وتخطيط المواقف بأحدث المعدات وخبرة تتجاوز 15 عاماً.",
+        "priceRange": "$$",
+        "sameAs": [
+          "https://wa.me/966565633240"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.hadeer-alsharq.com/#website",
+        "url": "https://www.hadeer-alsharq.com",
+        "name": "هدير الشرق للمقاولات العامة",
+        "publisher": {
+          "@id": "https://www.hadeer-alsharq.com"
         },
-        "description": "Best asphalt contractor in Jeddah specializing in road construction, infrastructure works, and paving."
+        "inLanguage": ["ar-SA", "en-US"]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "الرئيسية",
+            "item": "https://www.hadeer-alsharq.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "خدماتنا",
+            "item": "https://www.hadeer-alsharq.com/services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "مشاريعنا",
+            "item": "https://www.hadeer-alsharq.com/projects"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "من نحن",
+            "item": "https://www.hadeer-alsharq.com/about"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "تواصل معنا",
+            "item": "https://www.hadeer-alsharq.com/contact"
+          }
+        ]
       },
       {
         "@type": "FAQPage",
@@ -105,7 +167,7 @@ export default function RootLayout({
             "name": "كم سعر متر الأسفلت في جدة؟",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "يختلف السعر بناءً على مساحة المشروع ونوع الطبقة المطلوبة. نحن نقدم أفضل الأسعار التنافسية في جدة مع ضمان الجودة."
+              "text": "يختلف السعر بناءً على مساحة المشروع ونوع الطبقة المطلوبة (5سم أو 7سم). نحن نقدم أفضل الأسعار التنافسية في جدة مع ضمان الجودة. تواصل معنا لمعاينة الموقع وتحديد السعر النهائي."
             }
           },
           {
@@ -113,7 +175,23 @@ export default function RootLayout({
             "name": "هل تقومون بسفلتة مواقف السيارات الصغيرة؟",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "نعم، نحن متخصصون في سفلتة كافة المساحات بدءاً من مواقف القصور والمنازل إلى المخططات والمصانع."
+              "text": "نعم، نحن متخصصون في سفلتة كافة المساحات بدءاً من مواقف القصور والمنازل والمصانع إلى المخططات السكنية الكبرى والطرق الرئيسية."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ما هي مدة تنفيذ مشاريع السفلتة؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "تعتمد المدة على حجم المشروع، ولكننا نتميز بسرعة التنفيذ مع الالتزام التام بالمواصفات الفنية. المشاريع الصغيرة قد تستغرق يوماً واحداً فقط."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "هل أعمالكم معتمدة من أمانة جدة؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نعم، كافة أعمالنا تنفذ وفق اشتراطات وكود أمانة جدة ووزارة النقل، ونستخدم مواد ومختبرات معتمدة لضمان الجودة."
             }
           }
         ]

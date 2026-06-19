@@ -13,11 +13,20 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
 ): [RefObject<T | null>, boolean] {
   const { threshold = 0.15, rootMargin = "0px", triggerOnce = true } = options;
   const ref = useRef<T | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  // Start as true so SSR HTML shows visible content (SEO-critical)
+  const [isVisible, setIsVisible] = useState(true);
+  const [hasSetup, setHasSetup] = useState(false);
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
+
+    // On mount, hide elements that haven't been scrolled into view yet
+    // This enables the scroll-reveal animation while keeping SSR content visible
+    if (!hasSetup) {
+      setIsVisible(false);
+      setHasSetup(true);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -35,7 +44,7 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, [threshold, rootMargin, triggerOnce]);
+  }, [threshold, rootMargin, triggerOnce, hasSetup]);
 
   return [ref, isVisible];
 }

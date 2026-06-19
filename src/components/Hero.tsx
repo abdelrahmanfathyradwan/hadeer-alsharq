@@ -1,17 +1,13 @@
-"use client";
-
 import Image from "next/image";
-import { useLanguage } from "@/context/LanguageContext";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { translations, type Locale } from "@/lib/translations";
 
-export default function Hero() {
-  const { t, dir } = useLanguage();
-  const [ref, isVisible] = useIntersectionObserver<HTMLElement>({ threshold: 0.1 });
+export default function Hero({ locale = "ar" }: { locale?: Locale }) {
+  const t = translations[locale];
+  const dir = t.dir;
 
   return (
     <section
       id="home"
-      ref={ref}
       dir={dir}
       className="relative min-h-screen flex items-center overflow-hidden"
     >
@@ -19,7 +15,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         <Image
           src="/5.jpeg"
-          alt="Road construction and asphalt paving in Jeddah by Hadeer Al Sharq"
+          alt="سفلتة طرق في جدة - شركة هدير الشرق للمقاولات العامة"
           fill
           priority
           className="object-cover"
@@ -37,11 +33,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto w-full px-4 md:px-8 lg:px-16 pt-24 pb-16 md:pt-32 md:pb-20">
         <div className="max-w-4xl">
           {/* Badge */}
-          <div
-            className={`transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
+          <div className="transition-all duration-700 opacity-100 translate-y-0">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-road-500/10 border border-road-500/20 text-road-400 text-xs md:text-sm font-semibold backdrop-blur-sm mb-6 md:mb-8">
               <span className="w-2 h-2 rounded-full bg-road-500 animate-pulse-glow" />
               {t.hero.badge}
@@ -49,21 +41,13 @@ export default function Hero() {
           </div>
 
           {/* Headline */}
-          <div
-            className={`transition-all duration-700 delay-75 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
+          <div className="transition-all duration-700 delay-75 opacity-100 translate-y-0">
             <h2 className="text-road-400 text-2xl md:text-3xl font-bold mb-3 md:mb-5">
               {t.footer.companyName}
             </h2>
           </div>
 
-          <h1
-            className={`text-4xl sm:text-3xl md:text-6xl lg:text-7xl font-black leading-[1.6] mb-6 md:mb-8 transition-all duration-700 delay-150 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
+          <h1 className="text-4xl sm:text-3xl md:text-6xl lg:text-7xl font-black leading-[1.6] mb-6 md:mb-8 transition-all duration-700 delay-150 opacity-100 translate-y-0">
             <span className="text-white">{t.hero.title} </span>
             <span className="gradient-text">{t.hero.titleHighlight} </span>
             <br className="hidden md:block"/>
@@ -71,20 +55,12 @@ export default function Hero() {
           </h1>
 
           {/* Subtitle */}
-          <p
-            className={`text-base sm:text-lg md:text-xl text-asphalt-200 leading-relaxed max-w-2xl mb-8 md:mb-10 transition-all duration-700 delay-300 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
+          <p className="text-base sm:text-lg md:text-xl text-asphalt-200 leading-relaxed max-w-2xl mb-8 md:mb-10 transition-all duration-700 delay-300 opacity-100 translate-y-0">
             {t.hero.subtitle}
           </p>
 
           {/* CTA Buttons */}
-          <div
-            className={`flex flex-wrap gap-3 md:gap-4 mb-16 md:mb-20 transition-all duration-700 delay-[450ms] ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
+          <div className="flex flex-wrap gap-3 md:gap-4 mb-16 md:mb-20 transition-all duration-700 delay-[450ms] opacity-100 translate-y-0">
             <a
               href="tel:0565633240"
               className="group flex items-center gap-2.5 px-6 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-road-500 to-road-600 text-asphalt-950 font-bold text-sm md:text-base rounded-xl hover:from-road-400 hover:to-road-500 transition-all duration-300 shadow-xl shadow-road-500/25 hover:shadow-road-500/40 hover:-translate-y-0.5"
@@ -108,11 +84,7 @@ export default function Hero() {
           </div>
 
           {/* Stats */}
-          <div
-            className={`grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 transition-all duration-700 delay-600 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 transition-all duration-700 delay-600 opacity-100 translate-y-0">
             {t.hero.stats.map((stat, i) => (
               <div
                 key={i}

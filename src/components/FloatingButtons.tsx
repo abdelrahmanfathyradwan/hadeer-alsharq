@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLanguage } from "@/context/LanguageContext";
+import { translations, type Locale } from "@/lib/translations";
 
-export default function FloatingButtons() {
-  const { t, dir } = useLanguage();
+export default function FloatingButtons({ locale = "ar" }: { locale?: Locale }) {
+  const t = translations[locale];
+  const dir = t.dir;
   const [showScroll, setShowScroll] = useState(false);
 
   useEffect(() => {

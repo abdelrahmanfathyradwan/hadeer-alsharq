@@ -1,11 +1,10 @@
-"use client";
-
 interface SectionHeaderProps {
   badge: string;
   title: string;
   titleHighlight: string;
   subtitle?: string;
   light?: boolean;
+  as?: "h1" | "h2";
 }
 
 export default function SectionHeader({
@@ -14,7 +13,9 @@ export default function SectionHeader({
   titleHighlight,
   subtitle,
   light = false,
+  as = "h2",
 }: SectionHeaderProps) {
+  const HeadingTag = as;
   return (
     <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
       <span
@@ -26,14 +27,14 @@ export default function SectionHeader({
       >
         {badge}
       </span>
-      <h2
+      <HeadingTag
         className={`text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 ${
           light ? "text-asphalt-900" : "text-white"
         }`}
       >
         {title}{" "}
         <span className="gradient-text">{titleHighlight}</span>
-      </h2>
+      </HeadingTag>
       {subtitle && (
         <p
           className={`text-base md:text-lg leading-relaxed max-w-2xl mx-auto ${

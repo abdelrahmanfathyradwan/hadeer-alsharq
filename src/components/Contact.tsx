@@ -1,12 +1,9 @@
-"use client";
-
-import { useLanguage } from "@/context/LanguageContext";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { translations, type Locale } from "@/lib/translations";
 import SectionHeader from "@/components/SectionHeader";
 
-export default function Contact() {
-  const { t, dir } = useLanguage();
-  const [ref, isVisible] = useIntersectionObserver<HTMLElement>({ threshold: 0.1 });
+export default function Contact({ locale = "ar", as = "h2" }: { locale?: Locale; as?: "h1" | "h2" }) {
+  const t = translations[locale];
+  const dir = t.dir;
 
   const contactCards = [
     {
@@ -59,32 +56,24 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      ref={ref}
       dir={dir}
       className="relative py-20 md:py-28 bg-asphalt-950"
     >
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-        <div
-          className={`transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="transition-all duration-700 opacity-100 translate-y-0">
           <SectionHeader
             badge={t.contact.badge}
             title={t.contact.title}
             titleHighlight={t.contact.titleHighlight}
             subtitle={t.contact.subtitle}
+            as={as}
           />
         </div>
 
         {/* Contact Cards */}
-        <div
-          className={`grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-3xl mx-auto transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-3xl mx-auto transition-all duration-700 delay-200 opacity-100 translate-y-0">
           {contactCards.map((card, i) => (
             <a
               key={i}
@@ -119,4 +108,3 @@ export default function Contact() {
     </section>
   );
 }
-

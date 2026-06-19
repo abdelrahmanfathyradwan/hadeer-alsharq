@@ -1,7 +1,4 @@
-"use client";
-
-import { useEffect } from "react";
-import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
@@ -12,44 +9,40 @@ import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
+import type { Locale } from "@/lib/translations";
 
-function PageContent() {
-  const { dir, locale, t } = useLanguage();
+export const metadata: Metadata = {
+  title: "شركة أسفلت في جدة | مقاول سفلتة طرق معتمد - هدير الشرق",
+  description:
+    "أفضل مقاول أسفلت في جدة. متخصصون في سفلتة الطرق، البنية التحتية، وتخطيط المواقف بأحدث المعدات. خبرة 15 عاماً في مشاريع الطرق بجدة. اطلب عرض سعر الآن!",
+  alternates: {
+    canonical: "https://www.hadeer-alsharq.com",
+  },
+};
 
-  useEffect(() => {
-    document.documentElement.dir = dir;
-    document.documentElement.lang = locale;
-    document.title = t.meta.title;
-
-    // Update meta description
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", t.meta.description);
-    }
-  }, [dir, locale, t]);
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>;
+}) {
+  const { lang } = await searchParams;
+  const locale: Locale = lang === "en" ? "en" : "ar";
 
   return (
-    <div dir={dir} className="min-h-screen bg-asphalt-950 overflow-x-hidden relative">
-      <Navbar />
+    <div className="min-h-screen bg-asphalt-950 overflow-x-hidden relative">
+      <Navbar locale={locale} />
       <main>
-        <Hero />
-        <Services />
-        <Projects />
-        <Gallery />
-        <About />
-        <FAQ />
-        <Contact />
+        <Hero locale={locale} />
+        <Services locale={locale} />
+        <Projects locale={locale} />
+        <Gallery locale={locale} />
+        <About locale={locale} />
+        <FAQ locale={locale} />
+        <Contact locale={locale} />
       </main>
-      <Footer />
-      <FloatingButtons />
+      <Footer locale={locale} />
+      <FloatingButtons locale={locale} />
     </div>
   );
 }
 
-export default function Home() {
-  return (
-    <LanguageProvider>
-      <PageContent />
-    </LanguageProvider>
-  );
-}

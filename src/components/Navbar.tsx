@@ -1,10 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLanguage } from "@/context/LanguageContext";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import { translations, type Locale } from "@/lib/translations";
 
-export default function Navbar() {
-  const { t, toggleLocale, locale, dir } = useLanguage();
+export default function Navbar({ locale = "ar" }: { locale?: Locale }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const t = translations[locale];
+  const dir = t.dir;
+
+  const toggleLocale = () => {
+    const nextLocale = locale === "ar" ? "en" : "ar";
+    router.push(`${pathname}?lang=${nextLocale}`);
+  };
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -24,23 +34,25 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const navLinks = [
-    { href: "#home", label: t.nav.home },
-    { href: "#services", label: t.nav.services },
-    { href: "#projects", label: t.nav.projects },
-    { href: "#faq", label: t.faq.badge },
-    { href: "#about", label: t.nav.about },
-    { href: "#contact", label: t.nav.contact },
+    { href: "/", label: t.nav.home },
+    { href: "/services", label: t.nav.services },
+    { href: "/projects", label: t.nav.projects },
+    { href: "/#faq", label: t.faq.badge },
+    { href: "/about", label: t.nav.about },
+    { href: "/contact", label: t.nav.contact },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
     setMobileOpen(false);
-    const id = href.replace("#", "");
-    const el = document.getElementById(id);
-    if (el) {
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+    if (href.startsWith("/#") || href.startsWith("#")) {
+      const id = href.split("#")[1];
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
     }
   };
 
@@ -55,7 +67,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 h-16 md:h-20">
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-2 group" onClick={(e) => handleNavClick(e, "#home")}>
+        <Link href="/" className="flex items-center gap-2 group" onClick={(e) => handleNavClick(e, "/")}>
           <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-road-400 to-road-600 flex items-center justify-center transition-transform group-hover:scale-105 shadow-md shadow-road-500/25">
             <svg className="w-5 h-5 md:w-6 md:h-6 text-asphalt-950" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Crane arm */}
@@ -97,19 +109,19 @@ export default function Navbar() {
               {locale === "ar" ? "للمقاولات العامة" : "General Contracting"}
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
               className="px-4 py-2 text-sm font-medium text-asphalt-300 hover:text-road-400 transition-colors rounded-lg hover:bg-white/5"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -158,7 +170,7 @@ export default function Navbar() {
       >
         <div className="flex flex-col items-center justify-center gap-2 p-8 pt-12">
           {navLinks.map((link, i) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
@@ -166,7 +178,7 @@ export default function Navbar() {
               style={{ animationDelay: `${i * 0.05}s` }}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <div className="flex gap-3 mt-8">
             <a
